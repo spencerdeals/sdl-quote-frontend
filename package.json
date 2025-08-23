@@ -1,20 +1,16 @@
-{
-  "name": "instant-quote-frontend",
-  "private": true,
-  "version": "1.0.0",
-  "type": "commonjs",
-  "scripts": {
-    "build": "vite build",
-    "start": "node server.cjs",
-    "postinstall": "vite build"
+// vite.config.js  — paste-and-replace
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+
+export default defineConfig({
+  plugins: [react()],
+  preview: {
+    // Allow your Railway host
+    allowedHosts: ['sdl-quote-frontend-production.up.railway.app'],
+    port: process.env.PORT ? Number(process.env.PORT) : 4173,
+    host: true,
   },
-  "dependencies": {
-    "express": "^4.19.2",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+  server: {
+    host: true,
   },
-  "devDependencies": {
-    "vite": "^5.3.1",
-    "@vitejs/plugin-react": "^4.3.1"
-  }
-}
+})
