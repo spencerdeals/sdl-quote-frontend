@@ -1,79 +1,11 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SDL Quote — Frontend</title>
-    <meta http-equiv="Cache-Control" content="no-store" />
-    <style>
-      body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; margin: 0; padding: 2rem; background:#0b1f14; color:#fff; }
-      .card { max-width: 860px; margin: 0 auto; background: #10281a; border: 1px solid #1b3a25; border-radius: 16px; padding: 24px; box-shadow: 0 6px 24px rgba(0,0,0,0.25); }
-      h1 { margin: 0 0 4px; font-size: 1.4rem; }
-      .ok { color: #4ade80; font-weight: 600; }
-      .muted { color: #9fb3a6; font-size: 0.95rem; margin-bottom: 16px; }
-      .divider { height:1px; background: #1b3a25; margin: 16px 0 20px; }
-      .btn { display:inline-block; padding: 10px 14px; border-radius: 10px; border: 1px solid #1b3a25; background:#134022; color:#d8ffe5; text-decoration:none; font-weight:600; }
-      .btn:hover { background:#165229; }
-      pre { white-space: pre-wrap; word-wrap: break-word; background:#0e2317; padding:12px; border-radius:12px; border:1px solid #17361f; }
-    </style>
-    <script>
-      // HARD KILL any old service workers so vendor.js can't be stale
-      if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.getRegistrations().then(regs => {
-          for (const r of regs) r.unregister();
-        }).catch(() => {});
-        // Also clear any pending controller
-        navigator.serviceWorker.getRegistration && navigator.serviceWorker.getRegistration().then(r => {
-          if (r && r.active) { /* no-op; refresh below will pick up new files */ }
-        });
-      }
-
-      // Optional: quiet extension-style unhandled promise noise (doesn't affect app logic)
-      window.addEventListener('unhandledrejection', (e) => {
-        const msg = String(e && e.reason || '');
-        if (msg.includes('A listener indicated an asynchronous response')) {
-          // swallow noisy extension error
-          e.preventDefault();
-        }
-      });
-    </script>
-  </head>
-  <body>
-    <div class="card">
-      <h1>SDL Quote — Frontend is live <span class="ok">✅</span></h1>
-      <p class="muted">If you can see this, Vite built successfully and Express is serving <code>/dist</code> with <strong>fresh HTML (no cache)</strong>.</p>
-      <div class="divider"></div>
-
-      <p>Next, the Instant Quote UI can be mounted here. For now, this page ensures no stale service workers and no cached HTML.</p>
-
-      <p style="margin-top:18px;">
-        <a class="btn" href="#" onclick="location.reload(true);return false;">Hard refresh this page</a>
-      </p>
-
-      <h3 style="margin-top:26px;">Diagnostics</h3>
-      <pre id="diag">Loading…</pre>
-    </div>
-
-    <script type="module">
-      // Simple runtime checks to prove we’re on a fresh build
-      const diag = document.getElementById('diag');
-      (async () => {
-        const backend = (location.search.includes('local') ? 'http://localhost:8080' : '') || '';
-        const healthUrl = backend ? backend + '/health' : '/health';
-        let health = 'n/a';
-        try {
-          const r = await fetch(healthUrl);
-          health = await r.text();
-        } catch (e) {
-          health = 'fetch failed';
-        }
-        diag.textContent = [
-          `Time: ${new Date().toLocaleString()}`,
-          `Path: ${location.pathname}`,
-          `Backend /health: ${health}`,
-          `User Agent: ${navigator.userAgent}`,
-        ].join('\\n');
-      })();
-    </script>
-  </body>
+<head>
+  <meta charset="utf-8">
+  <title>Redirecting…</title>
+  <meta http-equiv="refresh" content="0; url=https://so-quote-production.up.railway.app/">
+</head>
+<body>
+  <p>If you are not redirected automatically, <a href="https://so-quote-production.up.railway.app/">click here</a>.</p>
+</body>
 </html>
