@@ -1,13 +1,65 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SDL — #alpha</title>
-    <meta name="description" content="SDL alpha frontend" />
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
-</html>
+// server.js — ESM version (works with "type":"module" in package.json)
+// Paste-and-replace full file
+// App: Railway *frontend* service
+// File path: server.js
+// Start command (Railway): node server.js
+
+import path, { dirname } from 'path';
+import express from 'express';
+import compression from 'compression';
+import morgan from 'morgan';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+const app = express();
+
+// ----- Config -----
+const PORT = process.env.PORT || 3000;
+// If you keep your built/static files elsewhere, set STATIC_DIR accordingly in Railway env vars.
+// Defaults to ./public
+const STATIC_DIR = process.env.STATIC_DIR || path.join(__dirname, 'public');
+
+// ----- Middleware -----
+app.use(compression());
+app.use(express.json({ limit: '2mb' }));
+app.use(express.urlencoded({ extended: true }));
+app.use(morgan('tiny'));
+
+// Serve static assets (HTML/CSS/JS) from STATIC_DIR
+app.use(express.static(STATIC_DIR, {
+  maxAge: '1h',
+  extensions: ['html']
+}));
+
+// Health check (kept at /health so your monitors still work)
+app.get('/health', (_req, res) => {
+  res.json({ ok: true, service: 'frontend', version: 'alpha-esm' });
+});
+
+// Root should serve your app (index.html)
+app.get(['/', '/index', '/index.html'], (_req, res) => {
+  res.sendFile(path.join(STATIC_DIR, 'index.html'));
+});
+
+// Optional: client-side router fallback to index.html
+app.get('*', (req, res, next) => {
+  const acceptsHtml = req.headers.accept && req.headers.accept.includes('text/html');
+  if (acceptsHtml) {
+    return res.sendFile(path.join(STATIC_DIR, 'index.html'));
+  }
+  return next();
+});
+
+// Basic error handler
+app.use((err, _req, res, _next) => {
+  console.error('Server error:', err);
+  res.status(500).json({ ok: false, error: 'Internal Server Error' });
+});
+
+app.listen(PORT, () => {
+  console.log(`Frontend server (ESM) listening on port ${PORT}`);
+  console.log(`Serving static files from: ${STATIC_DIR}`);
+  console.log('Root URL will serve index.html. /health returns { ok: true }.');
+});
