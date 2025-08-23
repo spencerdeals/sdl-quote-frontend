@@ -1,9 +1,7 @@
 import { useState } from 'react';
 
-// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-// IMPORTANT: Set your backend root here (FULL URL, not "/quote").
+// IMPORTANT: Use FULL backend URL (not "/quote")
 const BACKEND = "https://so-quote.fly.dev";
-// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 export default function App() {
   const [title, setTitle] = useState('');
@@ -62,7 +60,7 @@ export default function App() {
     input: { width: '100%', padding: '10px 12px', border: '1px solid #cad5cc', borderRadius: 10, fontSize: 14 },
     actions: { display: 'flex', gap: 10, marginTop: 14 },
     btn: { padding: '10px 14px', borderRadius: 10, border: '1px solid #2c7a3f', background: '#2c7a3f', color: 'white', fontWeight: 600, cursor: 'pointer' },
-    btnSecondary: { padding: '10px 14px', borderRadius: 10, border: '1px solid #2c7a3f', background: 'white', color: '#2c7a3f', fontWeight: 600, cursor: 'pointer' },
+    btnSecondary: { padding: '10px 14px', borderRadius: 10, border: '1px solid '#2c7a3f', background: 'white', color: '#2c7a3f', fontWeight: 600, cursor: 'pointer' },
     pre: { whiteSpace: 'pre-wrap', wordWrap: 'break-word', fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Consolas, monospace', background: '#f3f7f4', border: '1px solid #e1ebe5', padding: 10, borderRadius: 10, fontSize: 12 },
     ok: { color: '#1a7f37' },
     err: { color: '#b42318' },
